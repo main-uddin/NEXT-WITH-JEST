@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { sign } from "jsonwebtoken";
-import { serialize } from "cookie";
+// import { serialize } from "cookie";
 
 const MAX_AGE = 60 * 60 * 24 * 30;
 
@@ -18,23 +18,31 @@ export async function POST(request: Request) {
     }
 
     const secret = process.env.JWT_SECRET || "";
-
     const token = sign({ userName }, secret, { expiresIn: MAX_AGE });
 
-    const serialized = serialize("OutSiteJWT", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: MAX_AGE,
-        path: "/",
+    const response = NextResponse.json({
+        message: "login successful",
+        success: true,
     });
 
-    // or we can use res object
-    return new Response(JSON.stringify({ message: "Authenticated!" }), {
-        status: 200,
-        headers: { "Set-Cookie": serialized },
-    });
+    response.cookies.set("OutSiteJWT", token, { httpOnly: true });
+
+    return response
 }
+
+// const serialized = serialize("OutSiteJWT", token, {
+//     httpOnly: true,
+//     secure: process.env.NODE_ENV === "production",
+//     sameSite: "strict",
+//     maxAge: MAX_AGE,
+//     path: "/",
+// });
+
+// // or we can use res object
+// return new Response(JSON.stringify({ message: "Authenticated!" }), {
+//     status: 200,
+//     headers: { "Set-Cookie": serialized },
+// });
 
 // res.setHeader('Set-Cookie', serialize('OutSiteJWT', req.query.token as string, { path: '/' }));
 // res.status(200).json({ message: 'Cookies set successfully' });

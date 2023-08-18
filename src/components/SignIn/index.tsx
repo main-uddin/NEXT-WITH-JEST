@@ -16,9 +16,10 @@ const SignIn = () => {
         };
 
         try {
-            const { data } = await axios.post("/api/auth/signin", payload);
-            // alert(JSON.stringify(data));
-            push('/protected')
+            const { data }: any = await axios.post("/api/auth/signin", payload);
+            if (data?.success) {
+                push("/protected");
+            }
         } catch (e) {
             alert(JSON.stringify(e));
         }

@@ -1,9 +1,9 @@
 import HomeComponent from "@/components/Home";
 
 export default function Home() {
-  return (
-    <main className="">
-      <HomeComponent />
-    </main>
-  );
+    return (
+        <main className="">
+            <HomeComponent />
+        </main>
+    );
 }
