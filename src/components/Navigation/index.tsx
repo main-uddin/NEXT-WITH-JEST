@@ -29,9 +29,6 @@ const Navigation = () => {
                 >
                     SIGN IN
                 </button>
-                {/* <button className="bg-gray-400 py-1 px-2 rounded text-gray-300">
-          SIGN UP
-        </button> */}
             </div>
         </section>
     );
